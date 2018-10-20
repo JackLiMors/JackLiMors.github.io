@@ -7,14 +7,17 @@
   
   <title>正则表达式的两个简单应用 | I love Makise Kurisu forever</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="正则表达式首先是一串字符串，通过组合不同的字符规则，可以匹配并操作特定类型的字段。 正则表达式的具体内容自行查表，本文重点在于介绍其应用。 一、脏话过滤器： 1234567891011public class KillDirtyWords &amp;#123;    public String Str;    public String regex;    KillDirtyWords(String st">
+<meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式的两个简单应用">
 <meta property="og:url" content="http://yoursite.com/2018/10/20/正则表达式的两个简单应用/index.html">
 <meta property="og:site_name" content="I love Makise Kurisu forever">
+<meta property="og:description" content="正则表达式首先是一串字符串，通过组合不同的字符规则，可以匹配并操作特定类型的字段。 正则表达式的具体内容自行查表，本文重点在于介绍其应用。 一、脏话过滤器： 1234567891011public class KillDirtyWords &amp;#123;    public String Str;    public String regex;    KillDirtyWords(String st">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-20T04:51:01.343Z">
+<meta property="og:updated_time" content="2018-10-20T06:03:24.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式的两个简单应用">
+<meta name="twitter:description" content="正则表达式首先是一串字符串，通过组合不同的字符规则，可以匹配并操作特定类型的字段。 正则表达式的具体内容自行查表，本文重点在于介绍其应用。 一、脏话过滤器： 1234567891011public class KillDirtyWords &amp;#123;    public String Str;    public String regex;    KillDirtyWords(String st">
   
     <link rel="alternate" href="/atom.xml" title="I love Makise Kurisu forever" type="application/atom+xml">
   
@@ -83,11 +86,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>正则表达式首先是一串字符串，通过组合不同的字符规则，可以匹配并操作特定类型的字段。</p>
+<p>正则表达式的具体内容自行查表，本文重点在于介绍其应用。</p>
+<p><strong>一、脏话过滤器：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class KillDirtyWords &#123;</span><br><span class="line">    public String Str;</span><br><span class="line">    public String regex;</span><br><span class="line">    KillDirtyWords(String str)&#123;</span><br><span class="line">        Str = str;</span><br><span class="line">        regex = &quot;[Ff][Uu][Cc][Kk]|[Bb][Ii][Tt][Cc][Hh]|[Ss][Hh][Ii][Tt]&quot;; // 正则表达式内不能出现空格</span><br><span class="line">    &#125;;</span><br><span class="line">    public String kill()&#123;</span><br><span class="line">        return Str.replaceAll(regex,&quot;*&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码能过过滤掉各种大小写排列的“fuck”“bitch”“shit”字段。</p>
+<p>正则表达式中，相连的方括号可以锁定一串特定的字符，相同的写法还有小括号内加字符串，或直接写一串字符串。本段代码中，方括号内给出了同一个字母的大小写，对特定单词的大小写均能匹配上，可以防止用户通过输入类似“FuCK”之类的组合绕过屏蔽机制。</p>
+<p>实践的过程中应<strong>注意</strong>到，正则表达式内不能随意添加空格，因为空格会被当做需要匹配的一部分来处理。</p>
+<p>利用replace函数可以将满足条件的字符串替换为星号。</p>
+<p><strong>调用：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KillDirtyWords Str1 = new KillDirtyWords(&quot;Holy shit!You son of a bitch!MotherFucker!&quot;);</span><br><span class="line">System.out.println(Str1.kill());</span><br></pre></td></tr></table></figure>
+<p><strong>输出：</strong></p>
+<p><em>Holy \</em>!You son of a *!Mother*er!*</p>
+<!--(题外话)：Markdown语句中对 ‘ * ’ 这个符号敏感，需要使用 ‘ \ ’ 来转义。-->
+<p><strong>二、提取网址：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class GetUrls &#123;</span><br><span class="line">    public String Str;</span><br><span class="line">    public String regex;</span><br><span class="line">    GetUrls(String str)&#123;</span><br><span class="line">        Str = str;</span><br><span class="line">        regex =  &quot;(https://|http://|www)[.]?\\w+[.]&#123;1&#125;\\w+[.]?\\p&#123;Alpha&#125;+&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String Geturls()&#123;</span><br><span class="line">        Pattern pattern = Pattern.compile(regex);</span><br><span class="line">        Matcher matcher = pattern.matcher(Str);</span><br><span class="line">        String ans = &quot;&quot;;</span><br><span class="line">        while(matcher.find())&#123;</span><br><span class="line">            ans += matcher.group() + &quot;\n&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码能够提取类似于”http : //<a href="http://www.xxxxx……&quot;（或https）或者无http打头的&quot;www.xxxx……&quot;网址。" target="_blank" rel="noopener">www.xxxxx……&quot;（或https）或者无http打头的&quot;www.xxxx……&quot;网址。</a></p>
+<p>首先我们观察网址的一般结构。首先是开头，正如上段提到的，要么是http开头，要么是www开头，因此匹配的第一段我们选择<code>(http://|www)</code>打头。</p>
+<p>接下来考虑第一个点号，注意到，http://开头的网址，后面直接跟一个www，而www开头的网址，后面需要一个点号。因此紧随其后地，我们选择了<code>[.]?</code>语句，其中问号表示方括号内的点号出现0或1次。</p>
+<p>随后便是一大段中间内容，我们选择<code>\\w+</code>，w可以理解为word（我猜的），能匹配数字、字母、下划线。加号表示能够匹配一个以上的字符。随后必定跟上一个点号。<code>[.]{1}</code>表示出现且仅出现一个点号。</p>
+<p>最后是.com、.cn、.io……的最后一段。应该注意到，无论http开始，还是www开头，一个网址内会含有两个点号。因此若第一个点号匹配上，”.com、.cn、.io……“的点号就是上一段匹配到的点号，就不需要再额外匹配了。而若第一个点号没匹配上，上一段匹配到的点号就会是www之后的点号，我们还需要一个点号来匹配“.com、.cn、.io……”的点号。综上，最后一个点号出现的次数是0次或1次，采用<code>[.]?</code>的写法。</p>
+<p>最后一段一般是字母，选用<code>\\p{Alpha}+</code>来多次匹配。</p>
+<p><strong>调用：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GetUrls Str2 = new GetUrls(&quot;I usually sign in www.bilibili.com to wacth アニメ, while sometimes I browse www.zhihu.com. And I have my own website https://jacklimors.github.io.&quot;);</span><br><span class="line">System.out.println(Str2.Geturls());</span><br></pre></td></tr></table></figure>
+<p><strong>输出：</strong></p>
+<p><em><a href="http://www.bilibili.com" target="_blank" rel="noopener">www.bilibili.com</a></em></p>
+<p><em><a href="http://www.zhihu.com" target="_blank" rel="noopener">www.zhihu.com</a></em></p>
+<p><em><a href="https://jacklimors.github.io" target="_blank" rel="noopener">https://jacklimors.github.io</a></em></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/20/正则表达式的两个简单应用/" data-id="cjngyzxg10004l4tq9vfsoue9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/20/正则表达式的两个简单应用/" data-id="cjnh1gwwz0004dctqzb697ob4" class="article-share-link">Share</a>
       
       
     </footer>
